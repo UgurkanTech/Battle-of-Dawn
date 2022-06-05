@@ -1,24 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 using UnityEngine;
 using UnityEngine.UI;
  
 public class FPS: MonoBehaviour
 {
     [SerializeField] private Text _fpsText;
-    [SerializeField] private float _hudRefreshRate = 1f;
+
+    public float timer, refresh, avgFramerate;
+    string display = "FPS: {0}";
+
+    private void Start()
+    {
+        Application.targetFrameRate = 120;
+    }
  
-    private float _timer;
  
     private void Update()
     {
-        if (Time.unscaledTime > _timer)
-        {
-            int fps = (int)(1f / Time.unscaledDeltaTime);
-            _fpsText.text = "FPS: " + fps;
-            _timer = Time.unscaledTime + _hudRefreshRate;
-        }
+        //Change smoothDeltaTime to deltaTime or fixedDeltaTime to see the difference
+        float timelapse = Time.smoothDeltaTime;
+        timer = timer <= 0 ? refresh : timer -= timelapse;
+ 
+        if(timer <= 0) avgFramerate = (int) (1f / timelapse);
+        _fpsText.text = string.Format(display,avgFramerate.ToString());
     }
 }
+    

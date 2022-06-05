@@ -6,7 +6,6 @@ using UnityEngine;
 public class PinchAndZoom : MonoBehaviour
 {
     float MouseZoomSpeed = 25.0f;
-    float TouchZoomSpeed = 0.1f;
     float ZoomMinBound = 15f;
     float ZoomMaxBound = 179.9f;
     Camera cam;
@@ -22,8 +21,7 @@ public class PinchAndZoom : MonoBehaviour
         Application.targetFrameRate = 60;
         cam = GetComponent<Camera>();
     }
-
-    private bool touching = false;
+    
     void Update()
     {
         if (Input.touchSupported)

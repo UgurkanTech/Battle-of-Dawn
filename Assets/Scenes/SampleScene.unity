@@ -248,7 +248,7 @@ Camera:
   far clip plane: 2000
   field of view: 60
   orthographic: 1
-  orthographic size: 28.7
+  orthographic size: 100
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -271,14 +271,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.19747587, y: 0.08518881, z: -0.37048745, w: 0.90359575}
+  m_LocalRotation: {x: 0.46193978, y: 0.33141357, z: -0.19134171, w: 0.8001032}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 773572762}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -17.083, y: 18.309, z: -47.362}
+  m_LocalEulerAnglesHint: {x: 60, y: 45, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +342,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fpsText: {fileID: 478608947}
-  _hudRefreshRate: 1
+  timer: 0
+  refresh: 0
+  avgFramerate: 0
 --- !u!114 &330585550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,12 +359,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraToMove: {fileID: 773572762}
   _cameraObject: {fileID: 330585545}
-  _limitXMin: -180
-  _limitXMax: 180
-  _limitYMin: -130
-  _limitYMax: 130
-  _orthoMin: 15
-  _orthoMax: 120
+  _limitXMin: -70
+  _limitXMax: 70
+  _limitYMin: -70
+  _limitYMax: 70
+  _orthoMin: 30
+  _orthoMax: 140
   _interpolationStep: 0.2
 --- !u!114 &330585551
 MonoBehaviour:
@@ -545,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -599,16 +601,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615945234}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.6, y: 0, z: 100}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1636888895}
   - {fileID: 1962318171}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &615945236
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -832,7 +834,7 @@ Transform:
   m_GameObject: {fileID: 1190232073}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.001, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1636888895}
@@ -929,7 +931,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428154886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25, y: -0, z: 25}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -999,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

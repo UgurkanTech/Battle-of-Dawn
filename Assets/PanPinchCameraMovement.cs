@@ -63,10 +63,10 @@ namespace CameraActions
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(new Vector3(_limitXMin, _limitYMin), new Vector3(_limitXMin, _limitYMax));
-            Gizmos.DrawLine(new Vector3(_limitXMin, _limitYMax), new Vector3(_limitXMax, _limitYMax));
-            Gizmos.DrawLine(new Vector3(_limitXMax, _limitYMax), new Vector3(_limitXMax, _limitYMin));
-            Gizmos.DrawLine(new Vector3(_limitXMax, _limitYMin), new Vector3(_limitXMin, _limitYMin));
+            Gizmos.DrawLine(new Vector3(_limitXMin,0, _limitYMin), new Vector3(_limitXMin,0, _limitYMax));
+            Gizmos.DrawLine(new Vector3(_limitXMin,0, _limitYMax), new Vector3(_limitXMax,0, _limitYMax));
+            Gizmos.DrawLine(new Vector3(_limitXMax,0, _limitYMax), new Vector3(_limitXMax,0, _limitYMin));
+            Gizmos.DrawLine(new Vector3(_limitXMax,0, _limitYMin), new Vector3(_limitXMin,0, _limitYMin));
         }
 #endif
 
@@ -77,6 +77,7 @@ namespace CameraActions
 
         private void Update()
         {
+
             CheckIfUiHasBeenTouched();
 
             // If there are no touches 
@@ -95,6 +96,8 @@ namespace CameraActions
                 PanningInertia();
                 MinOrthoAchievedAnimation();
             }
+            
+  
         }
 
 
@@ -182,7 +185,7 @@ namespace CameraActions
                         float b = 1 + (_orthoMin / ((initOrtho - _orthoMin)));
                         t = Mathf.Clamp(a * x + b, 0f, 1f);
 
-                        _cameraToMove.transform.position = Vector3.Lerp(initPos, new Vector3(zoomTarget.x, zoomTarget.y, _cameraToMove.transform.position.z), t);
+                        _cameraToMove.transform.position = Vector3.Lerp(initPos, new Vector3(zoomTarget.x, _cameraToMove.transform.position.y, zoomTarget.y), t);
 
                         LimitCameraMovement();
                     }
@@ -216,7 +219,7 @@ namespace CameraActions
             Vector3 worldTouchPosition = _cameraObject.ScreenToWorldPoint(screenTouch);
 
             Vector3 worldDeltaPosition = worldTouchPosition - worldCenterPosition;
-
+            
             _cameraToMove.transform.Translate(-worldDeltaPosition);
 
             LimitCameraMovement();
@@ -234,9 +237,11 @@ namespace CameraActions
             }
 
             if (_panVelocity != Vector2.zero)
-            {             
+            {   
+   
+                
                 _panVelocity = Vector2.Lerp(_panVelocity, Vector2.zero, _interpolationStep);
-                _cameraToMove.transform.localPosition += new Vector3(-_panVelocity.x / (500 * (1 / _cameraObject.orthographicSize)), -_panVelocity.y / (500 * (1 / _cameraObject.orthographicSize)), 0);
+                _cameraToMove.transform.localPosition += Quaternion.Euler(60,45,0) * new Vector3(-_panVelocity.x / (500 * (1 / _cameraObject.orthographicSize)), 0, -_panVelocity.y / (500 * (1 / _cameraObject.orthographicSize)));
                 LimitCameraMovement();
             }
         }
@@ -261,10 +266,15 @@ namespace CameraActions
         /// </summary>
         private void LimitCameraMovement()
         {
-            float xCord = Mathf.Clamp(_cameraObject.transform.position.x, _limitXMin + (_cameraObject.orthographicSize * _cameraObject.aspect), _limitXMax - (_cameraObject.orthographicSize * _cameraObject.aspect));
-            float yCord = Mathf.Clamp(_cameraObject.transform.position.y, _limitYMin + _cameraObject.orthographicSize, _limitYMax - _cameraObject.orthographicSize);
+            //float xCord = Mathf.Clamp(_cameraObject.transform.position.x, _limitXMin + (_cameraObject.orthographicSize * _cameraObject.aspect), _limitXMax - (_cameraObject.orthographicSize * _cameraObject.aspect));
+            float zoom = _cameraObject.orthographicSize *  (_limitXMax / _orthoMax);
+            
+            float xCord = Mathf.Clamp(_cameraObject.transform.position.x, _limitXMin + zoom, Mathf.Abs(_limitXMax - zoom));
+            float yCord = Mathf.Clamp(_cameraObject.transform.position.z, _limitYMin + zoom, Mathf.Abs(_limitYMax - zoom));
 
-            _cameraToMove.transform.position = new Vector3(xCord, yCord, -10f);
+            
+
+            _cameraToMove.transform.position = new Vector3(xCord, 0, yCord);
         }
     }
 }
