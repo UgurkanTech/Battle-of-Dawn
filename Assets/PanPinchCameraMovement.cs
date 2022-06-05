@@ -39,6 +39,10 @@ namespace CameraActions
         [Space(40f)]
         [Header("Interpolation step for camera drag")]     
         [SerializeField]  private float _interpolationStep;
+        
+        [SerializeField]  private BuildingDragDrop bdd;
+        
+        [SerializeField] private TapOnGameObject togo;
         #endregion
 
         #region "Private members"
@@ -54,7 +58,8 @@ namespace CameraActions
         private bool _initTouch = false; // if init touch is on UI element
 
         private Vector2 _panVelocity;  //delta position of the touch [camera position derivative]
-        private TapOnGameObject togo;
+        
+        
         #endregion
 
 
@@ -75,11 +80,7 @@ namespace CameraActions
 
         private void Awake()
         {}
-
-        private void Start()
-        {
-            togo = GetComponent<TapOnGameObject>();
-        }
+        
 
         private void Update()
         {
@@ -94,7 +95,7 @@ namespace CameraActions
 
             if (_initTouch == false)
             {
-                if (togo.selectedObject.CompareTag("Building") && !togo.selectedObject.GetComponent<Building>().dragging)
+                if (togo.selectedObject.CompareTag("Building") && !bdd.dragging)
                 {
                     Panning();
                 }
