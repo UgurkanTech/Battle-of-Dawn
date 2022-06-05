@@ -58,7 +58,7 @@ public class Building : MonoBehaviour
             posd.x = Mathf.Clamp(Round(posd.x, 2.5f), -60, 60);
             posd.y = 0;
             posd.z = Mathf.Clamp(Round(posd.z, 2.5f), -60, 60);
-            Debug.Log(posd);
+            //Debug.Log(posd);
             toDrag.position = posd;
         }
  
