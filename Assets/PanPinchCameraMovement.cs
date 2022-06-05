@@ -92,9 +92,10 @@ namespace CameraActions
                 _initTouch = true;
             }
 
-            if (_initTouch == false && togo.selectedObject.tag.Equals("World"))
+            if (_initTouch == false)
             {
-                Panning();
+                if (togo.selectedObject.tag.Equals("World"))
+                    Panning();
                 Pinching();
             }
             else
