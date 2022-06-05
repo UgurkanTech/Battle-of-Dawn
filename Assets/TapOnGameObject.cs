@@ -25,13 +25,13 @@ namespace CameraActions
 
         [SerializeField] private Text text;
         public Transform selectedObject;
+        
         void Update()
         {
             if (Input.touchCount > 0 && !EventSystem.current.IsPointerOverGameObject(0)) // using the old input system
             {
-                Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                Physics.Raycast(worldPoint, Vector3.forward, out var hit);
-
+                Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                Physics.Raycast(raycast, out var hit);
                 if (hit.collider != null)
                 {
                     // Save the collider at the start of the touch
@@ -78,7 +78,15 @@ namespace CameraActions
                         //  }
                         //
                         //##################################################################################  
+                        if (selectedObject.CompareTag("Building"))
+                        {
+                            selectedObject.GetComponent<Building>().arrows.SetActive(false);
+                        }
                         selectedObject = hit.transform;
+                        if (selectedObject.CompareTag("Building"))
+                        {
+                            selectedObject.GetComponent<Building>().arrows.SetActive(true);
+                        }
                         text.text = "Selected: " + selectedObject.name;
                         s_first = false;
                         s_second = false;

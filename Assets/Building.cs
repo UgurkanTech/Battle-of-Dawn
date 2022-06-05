@@ -9,6 +9,7 @@ public class Building : MonoBehaviour
     private bool dragging = false;
     private Vector3 offset;
     private Transform toDrag;
+    public GameObject arrows;
  
     // Update is called once per frame
     private Vector3 mpos = Vector3.zero;
@@ -19,19 +20,6 @@ public class Building : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch t = Input.touches[0];
-            Ray ray2 = Camera.main.ScreenPointToRay(t.position);
-            Physics.Raycast(ray2, out var hit2);
-            
-            var pos3 = Camera.main.ScreenToWorldPoint(t.position);
-            pos3.z = transform.position.z;
-            mpos = pos3;
-        }
-
-        
-        
         
         Vector3 v3;
  
@@ -46,10 +34,8 @@ public class Building : MonoBehaviour
  
         if (touch.phase == TouchPhase.Began)
         {
-            Ray ray = Camera.main.ScreenPointToRay(pos);
-            RaycastHit hit;
- 
-            if (Physics.Raycast(ray, out hit))
+            Ray raycast = Camera.main.ScreenPointToRay(pos);
+            if (Physics.Raycast(raycast, out var hit))
             {
                 
                 if (hit.collider.tag == "Building")
@@ -69,9 +55,10 @@ public class Building : MonoBehaviour
             v3 = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
             v3 = Camera.main.ScreenToWorldPoint(v3);
             Vector3 posd = v3 + offset;
-            posd.x = Round(posd.x, 5);
-
-            posd.z = Round(posd.y, 5);
+            posd.x = Mathf.Clamp(Round(posd.x, 2.5f), -60, 60);
+            posd.y = 0;
+            posd.z = Mathf.Clamp(Round(posd.z, 2.5f), -60, 60);
+            Debug.Log(posd);
             toDrag.position = posd;
         }
  
@@ -80,7 +67,7 @@ public class Building : MonoBehaviour
             dragging = false;
         }
     }
-    int Round(float i, int v){
-        return (int)Mathf.Round(i/v) * v;
+    float Round(float i, float v){
+        return Mathf.Round(i/v) * v;
     }
 }

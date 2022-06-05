@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -53,6 +54,7 @@ namespace CameraActions
         private bool _initTouch = false; // if init touch is on UI element
 
         private Vector2 _panVelocity;  //delta position of the touch [camera position derivative]
+        private TapOnGameObject togo;
         #endregion
 
 
@@ -74,6 +76,10 @@ namespace CameraActions
         private void Awake()
         {}
 
+        private void Start()
+        {
+            togo = GetComponent<TapOnGameObject>();
+        }
 
         private void Update()
         {
@@ -86,7 +92,7 @@ namespace CameraActions
                 _initTouch = true;
             }
 
-            if (_initTouch == false && GetComponent<TapOnGameObject>().selectedObject.tag.Equals("World"))
+            if (_initTouch == false && togo.selectedObject.tag.Equals("World"))
             {
                 Panning();
                 Pinching();
@@ -136,7 +142,7 @@ namespace CameraActions
             {
                 Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
 
-                _panVelocity = touchDeltaPosition;
+                _panVelocity = touchDeltaPosition * new Vector2(0.5f, 0.5f);
                
                 PanningFunction(touchDeltaPosition);
             }
