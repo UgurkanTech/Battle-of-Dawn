@@ -359,10 +359,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraToMove: {fileID: 773572762}
   _cameraObject: {fileID: 330585545}
-  _limitXMin: -70
-  _limitXMax: 70
-  _limitYMin: -70
-  _limitYMax: 70
+  _limitXMin: -100
+  _limitXMax: 100
+  _limitYMin: -100
+  _limitYMax: 100
   _orthoMin: 30
   _orthoMax: 140
   _interpolationStep: 0.2

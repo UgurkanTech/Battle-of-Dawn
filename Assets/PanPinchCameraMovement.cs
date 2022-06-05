@@ -63,10 +63,10 @@ namespace CameraActions
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(new Vector3(_limitXMin,0, _limitYMin), new Vector3(_limitXMin,0, _limitYMax));
-            Gizmos.DrawLine(new Vector3(_limitXMin,0, _limitYMax), new Vector3(_limitXMax,0, _limitYMax));
-            Gizmos.DrawLine(new Vector3(_limitXMax,0, _limitYMax), new Vector3(_limitXMax,0, _limitYMin));
-            Gizmos.DrawLine(new Vector3(_limitXMax,0, _limitYMin), new Vector3(_limitXMin,0, _limitYMin));
+            Gizmos.DrawLine(Quaternion.Euler(0,45,0) * new Vector3(_limitXMin,0, _limitYMin), Quaternion.Euler(0,45,0) * new Vector3(_limitXMin,0, _limitYMax));
+            Gizmos.DrawLine(Quaternion.Euler(0,45,0) * new Vector3(_limitXMin,0, _limitYMax), Quaternion.Euler(0,45,0) * new Vector3(_limitXMax,0, _limitYMax));
+            Gizmos.DrawLine(Quaternion.Euler(0,45,0) * new Vector3(_limitXMax,0, _limitYMax), Quaternion.Euler(0,45,0) * new Vector3(_limitXMax,0, _limitYMin));
+            Gizmos.DrawLine(Quaternion.Euler(0,45,0) * new Vector3(_limitXMax,0, _limitYMin), Quaternion.Euler(0,45,0) * new Vector3(_limitXMin,0, _limitYMin));
         }
 #endif
 
@@ -268,13 +268,12 @@ namespace CameraActions
         {
             //float xCord = Mathf.Clamp(_cameraObject.transform.position.x, _limitXMin + (_cameraObject.orthographicSize * _cameraObject.aspect), _limitXMax - (_cameraObject.orthographicSize * _cameraObject.aspect));
             float zoom = _cameraObject.orthographicSize *  (_limitXMax / _orthoMax);
-            
-            float xCord = Mathf.Clamp(_cameraObject.transform.position.x, _limitXMin + zoom, Mathf.Abs(_limitXMax - zoom));
-            float yCord = Mathf.Clamp(_cameraObject.transform.position.z, _limitYMin + zoom, Mathf.Abs(_limitYMax - zoom));
+            float zoom2 = zoom * 0.8f;
+            Vector3 pos = Quaternion.Euler(0,45,0) * _cameraObject.transform.position;
+            float xCord = Mathf.Clamp(pos.x, (_limitXMin + zoom) , Mathf.Abs(_limitXMax - zoom));
+            float yCord = Mathf.Clamp(pos.z, (_limitYMin + zoom2) , Mathf.Abs(_limitYMax - zoom2));
 
-            
-
-            _cameraToMove.transform.position = new Vector3(xCord, 0, yCord);
+            _cameraToMove.transform.position = Quaternion.Euler(0,-45,0) * new Vector3(xCord, 0, yCord);
         }
     }
 }
