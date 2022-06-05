@@ -94,8 +94,15 @@ namespace CameraActions
 
             if (_initTouch == false)
             {
-                if (togo.selectedObject.tag.Equals("World"))
+                if (togo.selectedObject.CompareTag("Building") && !togo.selectedObject.GetComponent<Building>().dragging)
+                {
                     Panning();
+                }
+                else if(!togo.selectedObject.CompareTag("Building"))
+                {
+                    Panning();
+                }
+                    
                 Pinching();
             }
             else

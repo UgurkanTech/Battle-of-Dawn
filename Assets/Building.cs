@@ -6,7 +6,7 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     private float dist;
-    private bool dragging = false;
+    public bool dragging = false;
     private Vector3 offset;
     private Transform toDrag;
     public GameObject arrows;
