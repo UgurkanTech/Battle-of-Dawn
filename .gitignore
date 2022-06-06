@@ -43,6 +43,9 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+*BackUpThisFolder_*
+*_BurstDebugInformation_*
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
