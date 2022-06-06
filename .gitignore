@@ -45,8 +45,8 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-*/*BackUpThisFolder_*/*/*
-*/*_BurstDebugInformation_*/*/*
+*BackUpThisFolder_*/*/*
+*_BurstDebugInformation_*/*/*
 tempburstlibs
 # Unity3D generated meta files
 *.pidb.meta
