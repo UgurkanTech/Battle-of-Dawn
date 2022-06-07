@@ -9,6 +9,7 @@ public class BuildingDragDrop : MonoBehaviour
     public bool dragging = false;
     private Vector3 offset;
     private Transform toDrag;
+    [SerializeField] private World world;
     void Update()
     {
         
@@ -46,11 +47,16 @@ public class BuildingDragDrop : MonoBehaviour
             v3 = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
             v3 = Camera.main.ScreenToWorldPoint(v3);
             Vector3 posd = v3 + offset;
-            posd.x = Mathf.Clamp(Round(posd.x, 2.5f), -60, 60);
+            posd.x = Mathf.Clamp(Round(posd.x, 2.5f), -62.5f, 62.5f);
             posd.y = 0;
-            posd.z = Mathf.Clamp(Round(posd.z, 2.5f), -60, 60);
+            posd.z = Mathf.Clamp(Round(posd.z, 2.5f), -62.5f, 62.5f);
+
+
+
+            world.placeObjectOnGrid(posd, toDrag.gameObject, true);
+
             //Debug.Log(posd);
-            toDrag.position = posd;
+            //toDrag.position = posd;
         }
  
         if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
@@ -58,6 +64,9 @@ public class BuildingDragDrop : MonoBehaviour
             dragging = false;
         }
     }
+    
+    
+    
     float Round(float i, float v){
         return Mathf.Round(i/v) * v;
     }

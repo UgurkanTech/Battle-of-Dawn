@@ -7,4 +7,5 @@ public class Building : MonoBehaviour
 {
     public GameObject arrows;
     public bool canMove = false;
+    public int size;
 }
