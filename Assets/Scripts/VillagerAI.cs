@@ -23,6 +23,7 @@ public class VillagerAI : MonoBehaviour
 
                  agent.destination = pos;
                  
+                 
              }
          }
 }
