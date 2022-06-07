@@ -73,12 +73,12 @@ public class World : MonoBehaviour
     {
         Vector2Int gPos = worldToGridPosition(pos);
         if (gPos.x < 0 || gPos.x >= worldSize || gPos.y < 0 || gPos.y >= worldSize) return false;
-        Debug.Log(world[gPos.x, gPos.y]);
         return world[gPos.x, gPos.y] == null || world[gPos.x, gPos.y].GetInstanceID() == gameObject.GetInstanceID();
     }
 
     public void placeObjectOnGrid(Vector3 pos, GameObject gameObject, bool moved)
     {
+        gameObject.GetComponent<Building>().isGhost = true;
         bool empty = true;
         int size = gameObject.GetComponent<Building>().size;
         Vector2Int gPos = worldToGridPosition(pos);
@@ -88,10 +88,12 @@ public class World : MonoBehaviour
             empty = isGridPositionEmpty(pos, gameObject);
             if (!empty)
                 return;
+
             if(moved)
                 world[oldPos.x, oldPos.y] = null;
             world[gPos.x, gPos.y] = gameObject;
             gameObject.transform.position = pos;
+            gameObject.GetComponent<Building>().isGhost = false;
         }
         else if (size == 3)
         {
@@ -103,6 +105,8 @@ public class World : MonoBehaviour
                     bool check = isGridPositionEmpty(checkPos, gameObject);
                     if (!check)
                         return;
+
+                        
                     
                 }
             }
@@ -129,6 +133,7 @@ public class World : MonoBehaviour
                 }
             }
             gameObject.transform.position = pos;
+            gameObject.GetComponent<Building>().isGhost = false;
         }
         else
         {

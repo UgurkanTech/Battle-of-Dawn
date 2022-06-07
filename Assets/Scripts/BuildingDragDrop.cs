@@ -17,7 +17,12 @@ public class BuildingDragDrop : MonoBehaviour
  
         if (Input.touchCount != 1)
         {
-            dragging = false;
+            if (dragging)
+            {
+                dragging = false;
+                toDrag.GetComponent<Building>().isGhost = false;
+            }
+                
             return;
         }
  
@@ -58,9 +63,10 @@ public class BuildingDragDrop : MonoBehaviour
             //Debug.Log(posd);
             //toDrag.position = posd;
         }
- 
+        
         if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
         {
+            toDrag.GetComponent<Building>().isGhost = false;
             dragging = false;
         }
     }
