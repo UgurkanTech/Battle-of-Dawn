@@ -62,7 +62,6 @@ namespace CameraActions
                         {
                             s_first = false;
                         }
-
                         s_hasMoved = false;
                     }
 
@@ -81,13 +80,17 @@ namespace CameraActions
                         if (selectedObject.CompareTag("Building"))
                         {
                             selectedObject.GetComponent<Building>().arrows.SetActive(false);
-                            selectedObject.GetComponent<Building>().canMove = false;
+                            //selectedObject.GetComponent<Building>().canMove = false;
                         }
                         selectedObject = hit.transform;
-                        if (selectedObject.CompareTag("Building"))
+                        if (selectedObject.CompareTag("Building") && selectedObject.GetComponent<Building>().canMove)
                         {
+
                             selectedObject.GetComponent<Building>().arrows.SetActive(true);
-                            selectedObject.GetComponent<Building>().canMove = true;
+                            
+       
+                            
+                            //selectedObject.GetComponent<Building>().canMove = true;
                         }
                         text.text = "Selected: " + selectedObject.name;
                         s_first = false;

@@ -6,10 +6,25 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     public GameObject arrows;
-    public bool canMove = false;
+
+    public bool canMove
+    {
+        get
+        {
+            return moveState;
+        }
+        set
+        {
+            moveState = value;
+            if(!value)
+                arrows.SetActive(false);
+        }
+    }
+    [SerializeField] private bool moveState;
     public int size;
     public GameObject ghostObject;
-
+    public GameObject owner;
+    
     [SerializeField] private bool ghostState;
     public bool isGhost
     {

@@ -450,9 +450,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrows: {fileID: 1787103661}
-  canMove: 0
+  moveState: 1
   size: 1
   ghostObject: {fileID: 5386226326279357083}
+  owner: {fileID: 0}
   ghostState: 0
 --- !u!1 &5384405989198482707
 GameObject:

@@ -13,7 +13,7 @@ public class FPS: MonoBehaviour
 
     private void Start()
     {
-        Application.targetFrameRate = 50;
+        Application.targetFrameRate = 60;
     }
  
  

@@ -10,6 +10,8 @@ public class World : MonoBehaviour
     private static int worldSizeHalf = 25;
     public GameObject[,] world = new GameObject[worldSize,worldSize];
     public List<GameObject> npcs = new List<GameObject>();
+
+    public List<Building> trees = new List<Building>();
     
     [SerializeField] private GameObject townhallPrefab;
     [SerializeField] private GameObject treePrefab;
@@ -23,6 +25,8 @@ public class World : MonoBehaviour
     [Header("World Generation")]
     [SerializeField] private int treeCount;
     [SerializeField] private int npcCount;
+
+    public GameObject townHall;
     void Start()
     {
         GenerateWorld();
@@ -31,8 +35,8 @@ public class World : MonoBehaviour
     void GenerateWorld()
     {
         //Place Townhall
-        GameObject th = Instantiate(townhallPrefab, Vector3.zero, Quaternion.identity, buildingsParent);
-        placeObjectOnGrid(Vector3.zero, th, false);
+        townHall = Instantiate(townhallPrefab, Vector3.zero, Quaternion.identity, buildingsParent);
+        placeObjectOnGrid(Vector3.zero, townHall, false);
         //Plant Trees
         for (int i = 0; i < treeCount; i++)
         {
@@ -45,6 +49,7 @@ public class World : MonoBehaviour
             
             Vector3 worldPos = new Vector3(x - worldSizeHalf, 0, y - worldSizeHalf) * 2.5f;
             world[x, y] = Instantiate(treePrefab, worldPos, Quaternion.identity, treesParent);
+            trees.Add(world[x, y].GetComponent<Building>());
         }
         //Spawn Npcs
         for (int i = 0; i < npcCount; i++)
