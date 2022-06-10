@@ -28,7 +28,7 @@ public class ObjectSpawner : MonoBehaviour
                 break;
         }
         
-        if (uic.logCount > price)
+        if (uic.logCount >= price)
         {
             uic.logCount -= price;
             uic.updateUI();

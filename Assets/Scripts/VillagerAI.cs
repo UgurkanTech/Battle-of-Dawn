@@ -110,9 +110,10 @@ public class VillagerAI : MonoBehaviour
                              if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                              {
                                  
-                                 if (Vector3.Distance(transform.position, target.transform.position) > 2f)//Change this
+                                 if (Vector3.Distance(transform.position, target.transform.position) > 2.5f)//Change this
                                  {
                                      state = VillagerState.Roaming;
+                                     target.owner = null;
                                  }
                                  else
                                  {
