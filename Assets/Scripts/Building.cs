@@ -16,14 +16,20 @@ public class Building : MonoBehaviour
         set
         {
             moveState = value;
-            if(!value)
+            if (!value)
+            {
                 arrows.SetActive(false);
+                isSelected = false;
+            }
+                
         }
     }
     [SerializeField] private bool moveState;
     public int size;
     public GameObject ghostObject;
     public GameObject owner;
+    public bool isSelected;
+    public Vector3[] doorOffsets;
     
     [SerializeField] private bool ghostState;
     public bool isGhost

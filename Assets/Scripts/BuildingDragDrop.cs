@@ -56,9 +56,16 @@ public class BuildingDragDrop : MonoBehaviour
             posd.y = 0;
             posd.z = Mathf.Clamp(Round(posd.z, 2.5f), -62.5f, 62.5f);
 
-
-            if(toDrag.GetComponent<Building>().canMove)
-                world.placeObjectOnGrid(posd, toDrag.gameObject, true);
+            dragging = false;
+            if (toDrag.GetComponent<Building>().canMove)
+            {
+                if (toDrag.GetComponent<Building>().isSelected)
+                { 
+                    world.placeObjectOnGrid(posd, toDrag.gameObject, true);
+                    dragging = true;
+                }
+                    
+            }
             else
                 toDrag.GetComponent<Building>().isGhost = true;
             

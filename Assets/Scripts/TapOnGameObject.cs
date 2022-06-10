@@ -23,7 +23,7 @@ namespace CameraActions
         private static bool s_hasMoved = false;
         #endregion
 
-        [SerializeField] private Text text;
+        public Text text;
         public Transform selectedObject;
         
         void Update()
@@ -77,9 +77,13 @@ namespace CameraActions
                         //  }
                         //
                         //##################################################################################  
-                        if (selectedObject.CompareTag("Building"))
+                        
+                        
+                        
+                        if (selectedObject != null && selectedObject.CompareTag("Building"))
                         {
                             selectedObject.GetComponent<Building>().arrows.SetActive(false);
+                            selectedObject.GetComponent<Building>().isSelected = false;
                             //selectedObject.GetComponent<Building>().canMove = false;
                         }
                         selectedObject = hit.transform;
@@ -87,7 +91,7 @@ namespace CameraActions
                         {
 
                             selectedObject.GetComponent<Building>().arrows.SetActive(true);
-                            
+                            selectedObject.GetComponent<Building>().isSelected = true;
        
                             
                             //selectedObject.GetComponent<Building>().canMove = true;

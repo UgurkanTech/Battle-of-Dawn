@@ -44,7 +44,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.1
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 60
@@ -73,7 +73,6 @@ MonoBehaviour:
   speed: 0
   state: 0
   world: {fileID: 0}
-  townhall: {fileID: 0}
   fullObject: {fileID: 3766577289299619362}
   target: {fileID: 0}
 --- !u!1 &708092133618541787

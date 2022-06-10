@@ -95,14 +95,11 @@ namespace CameraActions
 
             if (_initTouch == false)
             {
-                if (togo.selectedObject.CompareTag("Building") && !bdd.dragging)
+                if (!bdd.dragging)
                 {
                     Panning();
                 }
-                else if(!togo.selectedObject.CompareTag("Building"))
-                {
-                    Panning();
-                }
+
                     
                 Pinching();
             }

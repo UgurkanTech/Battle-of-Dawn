@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CameraActions;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -26,10 +27,11 @@ public class VillagerAI : MonoBehaviour
 
          public World world;
          
-
          public GameObject fullObject;
 
          public Building target;
+
+         private TapOnGameObject tog;
          
          private float workSpeed;
          public bool isFull
@@ -54,7 +56,7 @@ public class VillagerAI : MonoBehaviour
             agent = GetComponent<NavMeshAgent>();
             world = GameObject.Find("World").GetComponent<World>();
             uic = GameObject.Find("Global Scripts").GetComponent<UIController>();
-            
+            tog = GameObject.Find("Global Scripts").GetComponent<TapOnGameObject>();
             state = VillagerState.Roaming;
             workSpeed = Random.Range(0, 1);
          }
@@ -93,7 +95,6 @@ public class VillagerAI : MonoBehaviour
                                  world.trees[i].owner = this.gameObject;
                              }
                          }
-
                          agent.destination = closest.transform.position;
                          target = closest;
                          state = VillagerState.OnGather;
@@ -116,15 +117,27 @@ public class VillagerAI : MonoBehaviour
                                  else
                                  {
                                      agent.speed = 0;
-                                     agent.destination = world.townHall.transform.position;
+
+                                     if (world.townHall.GetComponent<Building>().doorOffsets != null)
+                                     {
+                                         int door = Random.Range(0, world.townHall.GetComponent<Building>().doorOffsets.Length);
+                                         
+                                         agent.destination = world.townHall.transform.position + world.townHall.GetComponent<Building>().doorOffsets[door];
+                                     }
+                                     else
+                                     {
+                                         agent.destination = world.townHall.transform.position;
+                                     }
+                                     
+                                     
+                                     
+     
+                                     
                                      transform.LookAt(target.transform);//change this
                                      target.canMove = false;
                                      state = VillagerState.Gathering;
                                      timer = 0;
                                  }
-                                 
-                                 
-                                 
                              }
                          }
                      }
@@ -133,7 +146,7 @@ public class VillagerAI : MonoBehaviour
                  case VillagerState.Gathering:
                      if (timer > 100 + workSpeed * 100)
                      {
-                         agent.speed = 2;
+                         agent.speed = 3;
                          
                          state = VillagerState.OnDeposit;
                          isFull = true;
@@ -167,7 +180,6 @@ public class VillagerAI : MonoBehaviour
                                  else
                                  {
                                      agent.speed = 0;
-                                     world.townHall.GetComponent<Building>().canMove = false;
                                      state = VillagerState.Depositing;
                                      
                                  }
@@ -181,7 +193,7 @@ public class VillagerAI : MonoBehaviour
                  case VillagerState.Depositing:
                      if (timer > workSpeed * 20)
                      {
-                         agent.speed = 2;
+                         agent.speed = 3;
                          state = VillagerState.Roaming;
                          world.townHall.GetComponent<Building>().canMove = true;
                          isFull = false;
@@ -195,8 +207,7 @@ public class VillagerAI : MonoBehaviour
              }
              
              //agent.velocity.magnitude < 0.5f
-
-
+             
              timer++;
          }
 }

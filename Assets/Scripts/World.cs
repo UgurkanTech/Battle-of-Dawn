@@ -15,6 +15,7 @@ public class World : MonoBehaviour
     
     [SerializeField] private GameObject townhallPrefab;
     [SerializeField] private GameObject treePrefab;
+    [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject npcPrefab;
     
     
@@ -51,6 +52,24 @@ public class World : MonoBehaviour
             world[x, y] = Instantiate(treePrefab, worldPos, Quaternion.identity, treesParent);
             trees.Add(world[x, y].GetComponent<Building>());
         }
+        
+        
+        //Add walls
+        for (int i = 0; i < 0; i++)
+        {
+            int x, y;
+            do
+            {
+                x = Random.Range(0, worldSize);
+                y = Random.Range(0, worldSize);
+            } while (world[x, y] != null);
+            
+            Vector3 worldPos = new Vector3(x - worldSizeHalf, 0, y - worldSizeHalf) * 2.5f;
+            world[x, y] = Instantiate(wallPrefab, worldPos, Quaternion.identity, buildingsParent);
+            //trees.Add(world[x, y].GetComponent<Building>());
+        }
+        
+        
         //Spawn Npcs
         for (int i = 0; i < npcCount; i++)
         {
@@ -66,6 +85,21 @@ public class World : MonoBehaviour
         }
         
     }
+
+    public void SpawnPrefabAtRandomLocation(GameObject prefab)
+    {
+        int x, y;
+        do
+        {
+            x = Random.Range(worldSize / 3, worldSize * 2 / 3);
+            y = Random.Range(worldSize / 3, worldSize * 2 / 3);
+        } while (world[x, y] != null);
+            
+        Vector3 worldPos = new Vector3(x - worldSize/2, 0, y - worldSize/2) * 2.5f;
+        world[x, y] = Instantiate(prefab, worldPos, Quaternion.identity, buildingsParent);
+        
+    }
+
 
     public Vector2Int worldToGridPosition(Vector3 pos)
     {
