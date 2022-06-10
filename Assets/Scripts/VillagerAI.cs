@@ -130,10 +130,6 @@ public class VillagerAI : MonoBehaviour
                                          agent.destination = world.townHall.transform.position;
                                      }
                                      
-                                     
-                                     
-     
-                                     
                                      transform.LookAt(target.transform);//change this
                                      target.canMove = false;
                                      state = VillagerState.Gathering;
