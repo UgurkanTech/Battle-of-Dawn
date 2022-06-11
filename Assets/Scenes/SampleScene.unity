@@ -2331,7 +2331,7 @@ MonoBehaviour:
   treesParent: {fileID: 1799508446}
   npcsParent: {fileID: 1792617828}
   treeCount: 500
-  npcCount: 10
+  npcCount: 500
   townHall: {fileID: 0}
 --- !u!1 &656699351
 GameObject:
