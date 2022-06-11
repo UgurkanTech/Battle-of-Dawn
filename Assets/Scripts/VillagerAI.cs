@@ -20,8 +20,8 @@ public class VillagerAI : MonoBehaviour
 {
          private NavMeshAgent agent;
          public Vector3 pos;
-         public float distance;
-         public float speed;
+         [SerializeField] private float distance;
+         [SerializeField] private float speed;
 
          public VillagerState state;
 
@@ -64,9 +64,11 @@ public class VillagerAI : MonoBehaviour
          private int timer = 0;
          private void FixedUpdate()
          {
+             #if UNITY_EDITOR
              distance = agent.remainingDistance;
              speed = agent.velocity.magnitude;
-
+             #endif
+             
              switch (state)
              {
                  case VillagerState.Roaming:
