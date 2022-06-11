@@ -83,9 +83,10 @@ public class VillagerAI : MonoBehaviour
                      {
                          float minDist = Mathf.Infinity;
                          Building closest = null;
+                         float dist;
                          for (int i = 0; i < world.trees.Count; i++)
                          {
-                             float dist = Vector3.Distance(transform.position, world.trees[i].transform.position);
+                             dist = Vector3.Distance(transform.position, world.trees[i].transform.position);
                              if (dist < minDist && world.trees[i].owner == null)
                              {
                                  if (closest != null)
