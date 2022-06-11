@@ -22,6 +22,7 @@ public class VillagerAI : MonoBehaviour
          public Vector3 pos;
          [SerializeField] private float distance;
          [SerializeField] private float speed;
+         [SerializeField] private Vector3 destination;
 
          public VillagerState state;
 
@@ -77,6 +78,7 @@ public class VillagerAI : MonoBehaviour
 #if UNITY_EDITOR
              distance = agent.remainingDistance;
              speed = agent.velocity.magnitude;
+             destination = agent.destination;
 #endif
              
              switch (state)
@@ -84,7 +86,8 @@ public class VillagerAI : MonoBehaviour
                  case VillagerState.Roaming:
                      if (agent.remainingDistance < 1f)
                      {
-                         pos = agent.transform.position;
+                         agent.speed = 3;
+                         pos = transform.position;
                          pos += new Vector3(Random.Range(-20.0f, 20.0f), 0, Random.Range(-20.0f, 20.0f));
                          pos.x = Mathf.Clamp(pos.x, -62.5f, 62.5f);
                          pos.z = Mathf.Clamp(pos.z, -62.5f, 62.5f);
@@ -94,24 +97,29 @@ public class VillagerAI : MonoBehaviour
 
                      if (timer > workSpeed * 100)
                      {
+                         pos = transform.position;
                          float minDist = Mathf.Infinity;
                          Building closest = null;
                          float dist;
-                         for (int i = 0; i < world.trees.Count; i++)
+                         int count = world.trees.Count;
+                         Building tree = null;
+                         int closestID = -1;
+                         for (int i = 0; i < count; i++)
                          {
-                             dist = Vector3.Distance(transform.position, world.trees[i].transform.position);
-                             if (dist < minDist && world.trees[i].owner == null)
+                             tree = world.trees[i];
+                             if (tree.hasOwner) continue;
+                             dist = (pos - tree.transform.position).sqrMagnitude; //distance
+                             if (dist < minDist)
                              {
-                                 if (closest != null)
-                                     closest.owner = null;
                                  minDist = dist;
-                                 closest = world.trees[i];
-                                 world.trees[i].owner = this.gameObject;
+                                 closestID = i;
                              }
                          }
 
-                         if (closest != null)
+                         if (closestID != -1)
                          {
+                             closest = world.trees[closestID];
+                             closest.hasOwner = true;
                              agent.destination = closest.transform.position;
                              target = closest;
                              state = VillagerState.OnGather;
@@ -129,10 +137,10 @@ public class VillagerAI : MonoBehaviour
                      
                      if (IsAgentReachedDestination())
                      {
-                         if (Vector3.Distance(transform.position,target.transform.position) > 2.5f)//Change this
+                         if (Vector3.Distance(transform.position, target.transform.position) > 2.5f)//Change this
                          {
                              state = VillagerState.Roaming;
-                             target.owner = null;
+                             target.hasOwner = false;
                          }
                          else
                          {
@@ -155,7 +163,8 @@ public class VillagerAI : MonoBehaviour
                              timer = 0;
                          }
                      }
-                     
+
+
                      break;
                  case VillagerState.Gathering:
                      if (timer > workSpeed * 100)
@@ -164,7 +173,7 @@ public class VillagerAI : MonoBehaviour
                          
                          state = VillagerState.OnDeposit;
                          IsFull = true;
-                         target.owner = null;
+                         target.hasOwner = false;
                          
                          //Delet this:
                          target.canMove = true;
@@ -197,7 +206,7 @@ public class VillagerAI : MonoBehaviour
 
 
                      }
-
+  
                      break;
                  case VillagerState.Depositing:
                      if (timer > workSpeed * 20)

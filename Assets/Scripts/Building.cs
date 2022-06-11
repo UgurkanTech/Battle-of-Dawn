@@ -27,7 +27,7 @@ public class Building : MonoBehaviour
     [SerializeField] private bool moveState;
     public int size;
     public GameObject ghostObject;
-    public GameObject owner;
+    public bool hasOwner;
     public bool isSelected;
     public Vector3[] doorOffsets;
     
