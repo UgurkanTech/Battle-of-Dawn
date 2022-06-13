@@ -86,7 +86,26 @@ public class World : MonoBehaviour
         
     }
 
-    public void SpawnPrefabAtRandomLocation(GameObject prefab)
+    public void SpawnRandomTree(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            int x, y;
+            do
+            {
+                x = Random.Range(0, worldSize);
+                y = Random.Range(0, worldSize);
+            } while (world[x, y] != null);
+            
+            Vector3 worldPos = new Vector3(x - worldSize/2, 0, y - worldSize/2) * 2.5f;
+            world[x, y] = Instantiate(treePrefab, worldPos, Quaternion.identity, treesParent);
+            trees.Add(world[x, y].GetComponent<Building>());
+        }
+
+    }
+    
+    
+    public void SpawnPrefabAtRandomLocation(GameObject prefab, bool isNPC)
     {
         int x, y;
         do
@@ -96,8 +115,18 @@ public class World : MonoBehaviour
         } while (world[x, y] != null);
             
         Vector3 worldPos = new Vector3(x - worldSize/2, 0, y - worldSize/2) * 2.5f;
-        world[x, y] = Instantiate(prefab, worldPos, Quaternion.identity, buildingsParent);
+
+        if (isNPC)
+        {
+            Instantiate(prefab, worldPos, Quaternion.identity, npcsParent);
+        }
+        else
+        {
+            world[x, y] = Instantiate(prefab, worldPos, Quaternion.identity, buildingsParent);
+        }
         
+        
+
     }
 
 

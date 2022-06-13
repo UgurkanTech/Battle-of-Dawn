@@ -18,10 +18,12 @@ public class ObjectSpawner : MonoBehaviour
     public void SpawnObject(GameObject prefab)
     {
         int price = 500;
+        bool isNPC = false;
         switch (prefab.name)
         {
             case "Villager":
                 price = 10;
+                isNPC = true;
                 break;
             case "Wall":
                 price = 5;
@@ -32,7 +34,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             uic.logCount -= price;
             uic.updateUI();
-            world.SpawnPrefabAtRandomLocation(prefab);
+            world.SpawnPrefabAtRandomLocation(prefab, isNPC);
             uic.showMessage("A " + prefab.name + " bought for " + price +"!", 1, Color.green);
         }
         else

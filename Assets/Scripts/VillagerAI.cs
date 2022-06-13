@@ -52,6 +52,8 @@ public class VillagerAI : MonoBehaviour
 
          //Delet this:
          private UIController uic;
+
+         private int npcSpeed = 4;
          
          void Start () {
             agent = GetComponent<NavMeshAgent>();
@@ -86,7 +88,7 @@ public class VillagerAI : MonoBehaviour
                  case VillagerState.Roaming:
                      if (agent.remainingDistance < 1f)
                      {
-                         agent.speed = 3;
+                         agent.speed = npcSpeed;
                          pos = transform.position;
                          pos += new Vector3(Random.Range(-20.0f, 20.0f), 0, Random.Range(-20.0f, 20.0f));
                          pos.x = Mathf.Clamp(pos.x, -62.5f, 62.5f);
@@ -169,7 +171,7 @@ public class VillagerAI : MonoBehaviour
                  case VillagerState.Gathering:
                      if (timer > workSpeed * 100)
                      {
-                         agent.speed = 3;
+                         agent.speed = npcSpeed;
                          
                          state = VillagerState.OnDeposit;
                          IsFull = true;
@@ -177,12 +179,14 @@ public class VillagerAI : MonoBehaviour
                          
                          //Delet this:
                          target.canMove = true;
-                         target.gameObject.SetActive(false);
+                         //target.gameObject.SetActive(false);
 
                          Vector2Int p = world.worldToGridPosition(target.transform.position);
                          world.world[p.x, p.y] = null;
                          
                          world.trees.Remove(target);
+                         Destroy(target.gameObject);
+                         
                          target = null;
                          
                          timer = 0;
@@ -211,11 +215,12 @@ public class VillagerAI : MonoBehaviour
                  case VillagerState.Depositing:
                      if (timer > workSpeed * 20)
                      {
-                         agent.speed = 3;
+                         agent.speed = npcSpeed;
                          state = VillagerState.Roaming;
                          world.townHall.GetComponent<Building>().canMove = true;
                          IsFull = false;
                          uic.logCount += 1; //delet
+                         uic.exp += 1;
                          uic.updateUI(); //delet
                          timer = 0;
                      }
